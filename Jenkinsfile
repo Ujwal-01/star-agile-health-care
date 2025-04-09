@@ -1,13 +1,13 @@
 pipeline {
   agent any
   environment {
-    AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
-    AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+    AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = credentials('	AWS_SECRET_ACCESS_KEY')
   }
   stages {
     stage('build the project') {
       steps {
-        git 'https://github.com/lax66/star-agile-health-care_CAP02.git'
+        git 'https://github.com/Ujwal-01/star-agile-health-care.git'
         sh 'mvn clean package'
       }
     }
@@ -21,9 +21,9 @@ pipeline {
     }
     stage('push to docker-hub') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
           sh "echo $PASS | docker login -u $USER --password-stdin"
-          sh 'docker push laxg66/capstone02:v1'
+          sh 'docker push ujjwalsharma3201/capstone02:v1'
         }
       }
     }
